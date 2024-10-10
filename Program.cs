@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            
+            new Profile("James", "Pretoria", 25).ViewProfile();
         }
     }
 }
