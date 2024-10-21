@@ -63,6 +63,7 @@
                 if (Enum.IsDefined(typeof(Menu), option))
                 {
                     Menu menuOption = (Menu)option;
+                    Console.Clear();
                     return menuOption;
                 }
                 else
@@ -99,7 +100,6 @@
 
         static void Add()
         {
-            Console.Clear();
             Console.WriteLine("Enter the username");
             string username = Console.ReadLine();
             while (true)

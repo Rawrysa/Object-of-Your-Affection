@@ -16,9 +16,7 @@ namespace Object_of_Your_Affection
         private int age;
         private List<string> hobbies;
 
-        public Profile() { }
-
-        public Profile(string username, string city, int age, string hobbies, string pronouns) 
+        public Profile(string username, string city, int age, string hobbies, string pronouns)
         {
             this.username = username;
             this.city = city;
@@ -28,14 +26,14 @@ namespace Object_of_Your_Affection
             SetHobbies(hobbies);
         }
 
-        public static void CreateProfile(string username, string city, int age, string hobbies, string pronouns) 
+        public static void CreateProfile(string username, string city, int age, string hobbies, string pronouns)
         {
-            Profiles.Add(new Profile(username, city, age, hobbies, (pronouns!=string.Empty)? pronouns : "Not Disclosed"));
+            Profiles.Add(new Profile(username, city, age, hobbies, (pronouns != string.Empty) ? pronouns : "Not Disclosed"));
         }
 
         public static bool DeleteProfile(string username)
         {
-            if(Profiles.Exists(x => x.username==username))
+            if (Profiles.Exists(x => x.username == username))
             {
                 Profiles.RemoveAt(Profiles.FindIndex(x => x.username == username));
                 return true;
@@ -70,15 +68,18 @@ namespace Object_of_Your_Affection
                 $"\nAge: {age}" +
                 $"\nHobbies: ");
 
-            if (hobbies.Count > 0) { hobbies.ForEach(Console.WriteLine);  }
+            if (hobbies.Count > 0) { hobbies.ForEach(Console.WriteLine); }
             else { Console.WriteLine("No hobbies disclosed"); }
             Console.WriteLine();
         }
 
         private void SetHobbies(string hobbies)
         {
-            this.hobbies.AddRange(hobbies.Replace(" ","").Split(','));
-        }
+            if (!string.IsNullOrEmpty(hobbies))
+            {
+                this.hobbies.AddRange(hobbies.Replace(" ", "").Split(','));
+            }
 
+        }
     }
 }
