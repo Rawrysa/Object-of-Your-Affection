@@ -21,56 +21,21 @@
                 switch (MenuOption())
                 {
                     case Menu.view:
-                        if (Profile.Profiles.Count > 0)
-                        {
-                            Profile.Profiles.ForEach(x => x.ViewProfile());
-                        }
-                        else
-                        {
-                            Console.WriteLine("No profiles added yet");
-                        }
+                        View();
                         break;
                     case Menu.search:
-                        Console.WriteLine("Enter the username");
-                        if (Profile.SearchProfile(Console.ReadLine(), out List<Profile> results))
-                        {
-                            results.ForEach(x => x.ViewProfile());
-                        }
-                        else
-                        {
-                            Console.WriteLine("The user does not exist");
-                        }
+                        Search();   
                         break;
                     case Menu.add:
-                        Console.Clear();
-                        Console.WriteLine("Enter the username");
-                        string username = Console.ReadLine();
-                        Console.WriteLine("\nEnter the city");
-                        string city = Console.ReadLine();
-                        Console.WriteLine("\nEnter the age");
-                        int age = Int32.Parse(Console.ReadLine());
-                        Console.WriteLine("\nList out your hobbies seperated by commas");
-                        string hobbies = Console.ReadLine();
-                        Console.WriteLine("\nEnter your pronouns");
-                        string pronouns = Console.ReadLine();
-
-                        Profile.CreateProfile(username,city,age,hobbies,pronouns);
-
-                        Console.WriteLine("The user has been added");
+                        Add();
                         break;
                     case Menu.delete:
-                        Console.WriteLine("Enter the username");
-                        if (Profile.DeleteProfile(Console.ReadLine()))
-                        {
-                            Console.WriteLine("The user has been deleted");
-                        }
-                        else
-                        {
-                            Console.WriteLine("The user does not exist");
-                        }
+                        Delete();
                         break;
                     case Menu.exit:
                         exit = true;
+                        break;
+                    default:
                         break;
                 }
             }
@@ -104,6 +69,72 @@
                 {
                     Console.WriteLine("Enter a valid option");
                 }
+            }
+        }
+
+        static void View()
+        {
+            if (Profile.Profiles.Count > 0)
+            {
+                Profile.Profiles.ForEach(x => x.ViewProfile());
+            }
+            else
+            {
+                Console.WriteLine("No profiles added yet");
+            }
+        }
+
+        static void Search()
+        {
+            Console.WriteLine("Enter the username");
+            if (Profile.SearchProfile(Console.ReadLine(), out List<Profile> results))
+            {
+                results.ForEach(x => x.ViewProfile());
+            }
+            else
+            {
+                Console.WriteLine("The user does not exist");
+            }
+        }
+
+        static void Add()
+        {
+            Console.Clear();
+            Console.WriteLine("Enter the username");
+            string username = Console.ReadLine();
+            while (true)
+            {
+                if (Profile.SearchProfile(username) == true)
+                {
+                    Console.WriteLine("\nThe username already exists, please enter a unique one\n");
+                    username = Console.ReadLine();
+                }
+                else { break; }
+            }
+            Console.WriteLine("\nEnter the city");
+            string city = Console.ReadLine();
+            Console.WriteLine("\nEnter the age");
+            int age = Int32.Parse(Console.ReadLine());
+            Console.WriteLine("\nList out your hobbies seperated by commas");
+            string hobbies = Console.ReadLine();
+            Console.WriteLine("\nEnter your pronouns");
+            string pronouns = Console.ReadLine();
+
+            Profile.CreateProfile(username, city, age, hobbies, pronouns);
+
+            Console.WriteLine("The user has been added");
+        }
+
+        static void Delete()
+        {
+            Console.WriteLine("Enter the username");
+            if (Profile.DeleteProfile(Console.ReadLine()))
+            {
+                Console.WriteLine("The user has been deleted");
+            }
+            else
+            {
+                Console.WriteLine("The user does not exist");
             }
         }
     }

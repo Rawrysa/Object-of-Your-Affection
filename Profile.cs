@@ -28,14 +28,9 @@ namespace Object_of_Your_Affection
             SetHobbies(hobbies);
         }
 
-        public static bool CreateProfile(string username, string city, int age, string hobbies, string pronouns) 
+        public static void CreateProfile(string username, string city, int age, string hobbies, string pronouns) 
         {
-            if (!Profiles.Exists(x => x.username == username))
-            {
-                Profiles.Add(new Profile(username, city, age, hobbies, (pronouns!=string.Empty)? pronouns : "Not Disclosed"));
-                return true;
-            }
-            else { return false; }
+            Profiles.Add(new Profile(username, city, age, hobbies, (pronouns!=string.Empty)? pronouns : "Not Disclosed"));
         }
 
         public static bool DeleteProfile(string username)
@@ -56,6 +51,15 @@ namespace Object_of_Your_Affection
                 return true;
             }
             else { profile = null; return false; }
+        }
+
+        public static bool SearchProfile(string username)
+        {
+            if (Profiles.Exists(x => x.username == username))
+            {
+                return true;
+            }
+            else { return false; }
         }
 
         public void ViewProfile()
