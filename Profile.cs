@@ -8,7 +8,9 @@ namespace Object_of_Your_Affection
 {
     internal class Profile
     {
-        private static List<Profile> profiles = new List<Profile>(); 
+        private static List<Profile> profiles = new List<Profile>();
+        public static List<Profile> Profiles
+        { get { return profiles; } }
 
         private string username, city, pronouns;
         private int age;
@@ -26,31 +28,31 @@ namespace Object_of_Your_Affection
             SetHobbies(hobbies);
         }
 
-        public bool CreateProfile(string username, string city, int age, string hobbies, string pronouns = "Not Disclosed") 
+        public static bool CreateProfile(string username, string city, int age, string hobbies, string pronouns) 
         {
-            if (!profiles.Exists(x => x.username == username))
+            if (!Profiles.Exists(x => x.username == username))
             {
-                profiles.Add(new Profile(username, city, age, hobbies, pronouns));
+                Profiles.Add(new Profile(username, city, age, hobbies, (pronouns!=string.Empty)? pronouns : "Not Disclosed"));
                 return true;
             }
             else { return false; }
         }
 
-        public bool DeleteProfile(string username)
+        public static bool DeleteProfile(string username)
         {
-            if(profiles.Exists(x => x.username==username))
+            if(Profiles.Exists(x => x.username==username))
             {
-                profiles.RemoveAt(profiles.FindIndex(x => x.username == username));
+                Profiles.RemoveAt(Profiles.FindIndex(x => x.username == username));
                 return true;
             }
             else { return false; }
         }
 
-        public bool SearchProfile(string username, out List<Profile> profile)
+        public static bool SearchProfile(string username, out List<Profile> profile)
         {
-            if (profiles.Exists(x => x.username == username))
+            if (Profiles.Exists(x => x.username == username))
             {
-                profile = profiles.Where(x => x.username == username).ToList();
+                profile = Profiles.Where(x => x.username == username).ToList();
                 return true;
             }
             else { profile = null; return false; }
@@ -66,9 +68,10 @@ namespace Object_of_Your_Affection
 
             if (hobbies.Count > 0) { hobbies.ForEach(Console.WriteLine);  }
             else { Console.WriteLine("No hobbies disclosed"); }
+            Console.WriteLine();
         }
 
-        public void SetHobbies(string hobbies)
+        private void SetHobbies(string hobbies)
         {
             this.hobbies.AddRange(hobbies.Replace(" ","").Split(','));
         }
